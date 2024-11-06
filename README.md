@@ -4,8 +4,6 @@
 Nama    : Muhammad Naufal Ramadhan <br>
 NPM     : 2306241700 <br>
 Kelas   : D <br>
-
-Link Web : http://muhammad-naufal324-ejersey.pbp.cs.ui.ac.id/
 <br>
 
 ---
