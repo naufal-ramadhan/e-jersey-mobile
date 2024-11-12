@@ -71,3 +71,75 @@ Di build function pada ItemCard saya menambahkan ini
 ```
 Saya menampilkan nya dengan SnackBar dengan content "Kamu Telah Menekan tombol .." agar bisa add semacam listener saya gunakan InkWell dan menggunakan properti onTap() agar ketika ditekan akan menampilkan snackbar dengan contentnya.
 </details>
+
+<details>
+<summary>
+Tugas 8
+</summary>
+  
+ ##### 1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+   `const` pada flutter itu sendiri adalah sebuah penyimpanan variabel yang immutable (tidak dapat diubah), keuntungannya adalah lebih hemat memori dibanding tipe variable lainnya seperti `var`. Waktu yang tepat untuk digunakan ketika kita ingin menyimpan nilai yang tidak akan berubah dan sudah ditentukan pada saat compile time, contohnya adalah daftar list-page pada drawer. dan sebaiknya tidak gunakan ketika kita ingin menyimpan nilai yang dinamis, baik itu yang dapat di set hanya pada saat run time atau berubah-ubah di run time.
+   
+ ##### 2. Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+ seperti namanya, `Column` digunakan untuk mengatur dan menata widget secara vertikal, dimana `Row` secara horizontal. Disini juga terdapat perbedaan `MainAxis` dan `CrossAxis` nya, dimana `MainAxis` `Column` adalah Vertikal, dan `CrossAxis` nya Horizontal, dan `Row` kebalikannya. Contoh penggunaan `Column` yang paling jelas pada tugas ini terletak pada `jerseyentry_form.dart`, yaitu menata setiap label dan input field secara horizontal.
+```
+child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+        ...
+        ]
+)
+```
+
+dan contoh penggunaan row bisa dilihat pada `menu.dart` ketika menampilkan card NPM, Nama, dan Kelas.
+```
+Row(
+    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    children: [
+      InfoCard(title: 'NPM', content: npm),
+      InfoCard(title: 'Name', content: name),
+      InfoCard(title: 'Class', content: className),
+    ],
+  ),
+```
+
+ 
+ ##### 3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+ Pada form ini saya menggunakan satu saja, yaitu `TextFormField`, ada elemen input flutter lain yang tidak saya gunakan, contohnya `DropdownButtonFormField` (selecting choices), `Checkbox` (Ceklis Box). `DatePicker` (Field untuk tanggal). alasan kenapa saya hanya cukup menggunakan `TextFormField` karena field tersebut tidak terbatas hanya pada string saja, tetapi menerima int juga bisa, walaupun kita harus parse secara manual terlebih dahulu. Seperti berikut untuk validasinya
+```
+child: TextFormField(
+  decoration: InputDecoration(
+  hintText: "Harga Jersey",
+  labelText: "Harga Jersey",
+  border: OutlineInputBorder(
+  borderRadius: BorderRadius.circular(5.0),
+    ),
+  ),
+  onChanged: (String? value) {
+    setState(() {
+      _amount = int.tryParse(value!) ?? 0;
+    });
+  },
+  validator: (String? value) {
+    if (value == null || value.isEmpty) {
+      return "Harga Jersey tidak boleh kosong!";
+    }
+    if (int.tryParse(value) == null) {
+       return "Harga Jersey harus berupa angka!";
+    }
+    return null;
+    },
+  ),
+```
+ ##### 4. Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+ Ya. Pertama saya me-set `ThemeData` pada `main.dart` dan menentukan colorscheme kesukaan saya. Agar theme nya konsisten dalam semua page flutter, saya menggunakan `Theme.of(context)`. Perlu diketahui `context` pada flutter disini mengacu kepada sebuah hierarki/pohon widget pada aplikasi tersebut, sehingga yang akan dilakukan adalah mengambil theme dari parent widget terdekat. Contoh pengaplikasian pada `left_drawer.dart` :
+```
+DrawerHeader(
+  decoration: BoxDecoration(
+    color: Theme.of(context).colorScheme.primary,
+  ),
+...
+```
+ ##### 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+ Pada flutter, kita menggunakan `Navigator`. Sistemnya dengan menggunakan stack, semisal sebuah user menekan tombol, maka kita akan me push `Route` ke dalam stack navigator, yang akan menampilkan lamannya (karena terletak paling atas). Semisal user memencet laman lain ketika di dalam page tersebut, maka akan dilakukan hal yang sama dengan push `Route` ke stack. Kemudian, ketika user memencet tombol `Back`, Stack `Navigator` akan di pop (elemen teratas dibuang, dan elemen selanjutnya di show) ini merupakan langkah yang cocok untuk tipe navigasi pada mobile yang tidak menggunakan url seperti pada web. Sehingga ketika user sudah terletak pada elemen terakhir pada stack (pada homepage biasanya) maka user akan keluar dari app nya. 
+</details>
