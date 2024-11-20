@@ -1,5 +1,8 @@
+import 'package:e_jersey/screens/login.dart';
 import 'package:flutter/material.dart';
 import 'package:e_jersey/screens/menu.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,8 +14,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
+      title: 'E-Jersey',
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -34,7 +42,8 @@ class MyApp extends StatelessWidget {
           ).copyWith(secondary: Colors.deepOrange[400]),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: const LoginPage(),
+      )
     );
   }
 }
