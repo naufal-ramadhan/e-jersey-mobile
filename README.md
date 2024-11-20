@@ -143,3 +143,38 @@ DrawerHeader(
  ##### 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
  Pada flutter, kita menggunakan `Navigator`. Sistemnya dengan menggunakan stack, semisal sebuah user menekan tombol, maka kita akan me push `Route` ke dalam stack navigator, yang akan menampilkan lamannya (karena terletak paling atas). Semisal user memencet laman lain ketika di dalam page tersebut, maka akan dilakukan hal yang sama dengan push `Route` ke stack. Kemudian, ketika user memencet tombol `Back`, Stack `Navigator` akan di pop (elemen teratas dibuang, dan elemen selanjutnya di show) ini merupakan langkah yang cocok untuk tipe navigasi pada mobile yang tidak menggunakan url seperti pada web. Sehingga ketika user sudah terletak pada elemen terakhir pada stack (pada homepage biasanya) maka user akan keluar dari app nya. 
 </details>
+
+<details>
+<summary>
+Tugas 9
+</summary>
+  
+  ##### 1. Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+  Model membantu dalam memetakan data JSON yang dikirim atau diterima dari backend menjadi objek yang lebih terstruktur di dalam aplikasi. Seharusnya tidak akan terjadi error jika kita tidak membuat model terlebih dahulu, tetapi bisa memperbesar chance untuk terjadinya error ketika parsing data json tersebut.
+  
+  ##### 2. Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+  Untuk melakukan http request, implementasi sudah yang digunakan disini adalah get dan post request. Contohnya ketika mengambil daftar jersey dari endpoint, dan post jersey baru yang dibuat di mobile.
+  ##### 3. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+  CookieRequest digunakan untuk melakukan request HTTP sambil mempertahankan sesi pengguna (session). dan tujan dibagikan ke seluruh komponen aplikasi adalah untuk menjaga konsistensi, karena semuanya menggunakan session cookies yang sama.
+    ##### 4. Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+  input dari user diambil dari widget tertentu, seperto textfield, dropdownfield, dan lain-lain. Kemudian data tersebut di validasi dan di proses (disimpan ke variable contohnya), kemudian variable tersebut di tampilkan pada dengan widget tertentu, contohnya Text().
+  ##### 5. Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+  1. Register, user mengisi form, kemudian akan di validasi (contoh email valid atau tidak), dan dikirim ke backend melalui http post, pada django email tersebut di validasi lagi, tetapi validasinya adalah apakah email tersebut sudah digunakan atau belom. dan kemudian akan mengirim status code kembali ke flutter.
+  2. Login, user mengisi form, validasi apakah semua form terisi, lalu data dikirim ke backend dengan http post. pada django, cek apakah user tersebut sudah terdaftar atau belom, lalu dikirim status code nya balik, jika success maka akan mengembalikan session cookie, yang akan disimpan dengan CookieRequest pada flutter.
+  3. Logout, flutter mengirim request ke endpoint logout dan juga session cookiesnya. pada django, di validasi apakah cookies nya ada atau tidak dan kemudian di hapus, dan mengirim response balik.
+##### 6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+1) Mengimplementasikan fitur registrasi akun pada proyek tugas Flutter.
+Membuat form register pada flutter, dan juga membuat view register pada proyek django untuk menghandle registrasi dari flutter.
+2) Membuat halaman login pada proyek tugas Flutter.
+Membuat form login pada flutter, dan juga membuat view login pada proyek django untuk menghandle login dari flutter.
+3 ) Mengintegrasikan sistem autentikasi Django dengan proyek tugas Flutter.
+Di-integrasikan dengan membuat views pada django khusus untuk menghandle authentikasi dari mobile.
+4) Membuat model kustom sesuai dengan proyek aplikasi Django.
+Pertama mengambil contoh json dari models saya pada endpoint json, dan saya gunakan web quicktype untuk membuatkan saya modelnya dari json tersebut.
+5 ) Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy.
+Membuat `list_jersey.dart` yang akan menampilkan item dari json pada user tersebut, dan tiap dari itemnya, saya tambahkan ontap untuk me push page route ke page untuk detail per item yang juga pass instance model yang di pencet.
+6 ) Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item.
+saya membuat `detail_jersey.dart` yang akan menampilkan detail per item, karena models nya juga di pass pada page list item, saya akan menampilan semua fieldnya dari instace model tersebut.
+7) Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login.
+Sudah, karena pada views.py untuk show_json, yang di return sudah di filter dengan filter(user=request.user)
+</details>
